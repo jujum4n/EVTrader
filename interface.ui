@@ -40,7 +40,7 @@
      <string>Buy</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="askListWidget">
+   <widget class="QListWidget" name="bidListWidget">
     <property name="geometry">
      <rect>
       <x>80</x>
@@ -50,7 +50,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QListWidget" name="bidListWidget">
+   <widget class="QListWidget" name="askListWidget">
     <property name="geometry">
      <rect>
       <x>80</x>

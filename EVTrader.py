@@ -64,24 +64,23 @@ class EV(QtWidgets.QMainWindow, interface.Ui_MainWindow):
         self.currentCoinPrice.setText(str(msg_json["trade_px"]))
 
         usd_value = self.last_px * self.coins_owned
-        self.usdHeldValueLabel.setText('$ ' + str(round(usd_value, 2)))
+        self.usdHeldValueLabel.setText('$ ' + str(usd_value))
         self.coinsHeldValueLabel.setText(str(self.coins_owned) + ' Coins')
 
-        # Clear the ask widget and set the data
         self.askListWidget.clear()
-        self.askListWidget.addItem(str(msg_json["a1"]) + ' - ' + str(msg_json["aq1"]))
-        self.askListWidget.addItem(str(msg_json["a2"]) + ' - ' + str(msg_json["aq2"]))
-        self.askListWidget.addItem(str(msg_json["a3"]) + ' - ' + str(msg_json["aq3"]))
-        self.askListWidget.addItem(str(msg_json["a4"]) + ' - ' + str(msg_json["aq4"]))
         self.askListWidget.addItem(str(msg_json["a5"]) + ' - ' + str(msg_json["aq5"]))
+        self.askListWidget.addItem(str(msg_json["a4"]) + ' - ' + str(msg_json["aq4"]))
+        self.askListWidget.addItem(str(msg_json["a3"]) + ' - ' + str(msg_json["aq3"]))
+        self.askListWidget.addItem(str(msg_json["a2"]) + ' - ' + str(msg_json["aq2"]))
+        self.askListWidget.addItem(str(msg_json["a1"]) + ' - ' + str(msg_json["aq1"]))
 
-        # Clear the bid widget and set the data
         self.bidListWidget.clear()
         self.bidListWidget.addItem(str(msg_json["b1"]) + ' - ' + str(msg_json["bq1"]))
         self.bidListWidget.addItem(str(msg_json["b2"]) + ' - ' + str(msg_json["bq2"]))
         self.bidListWidget.addItem(str(msg_json["b3"]) + ' - ' + str(msg_json["bq3"]))
         self.bidListWidget.addItem(str(msg_json["b4"]) + ' - ' + str(msg_json["bq4"]))
         self.bidListWidget.addItem(str(msg_json["b5"]) + ' - ' + str(msg_json["bq5"]))
+
         self.setWindowTitle(str(msg_json["trade_px"]) + ' - EVTrader v0.1')
 
     def closeEvent(self, event):
