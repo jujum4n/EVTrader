@@ -10,10 +10,16 @@ pip install PyQt5
 pip install zmq
 pip install gdax
 ```
+#### Ways to run
+1) You can simply double click the `EVTrader.lnk` shortcut in the base repository. 
+2) You can copy or the `EVTrader.lnk` shortcut to your desktop so you can start the program from there. 
+3) You can start the program by executing the `EVTrader.bat` which subsequently does the following below:
 ```
-startExchangeData.bat
-python3 main.py
+startExchangeData.bat 
+python3 EVTrader.py
 ```
+The above commands will work to start the program, but you need to run each in a seperate command window and start `startExchangeData.bat` first.
+
 ![alt text](Screenshots/proj.gif)
 #### Built With
 * [Python](https://www.python.org/) - Python 3.6 +
