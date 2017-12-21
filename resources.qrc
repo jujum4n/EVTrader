@@ -1,0 +1,12 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>icons/colored_cube.png</file>
+    <file>icons/new folder.png</file>
+    <file>icons/devedee.png</file>
+    <file>icons/calc.png</file>
+    <file>icons/pic.png</file>
+    <file>icons/paperfulloftext.png</file>
+    <file>icons/note.png</file>
+    <file>icons/excel.png</file>
+</qresource>
+</RCC>

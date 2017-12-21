@@ -1,0 +1,1 @@
+bitcoinexchangefh -zmq -zmqdest "tcp://127.0.0.1:6002" -instmts subscriptions.ini
