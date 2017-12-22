@@ -10,6 +10,7 @@ import json
 
 class EVmqListener(QtCore.QObject):
     message = QtCore.pyqtSignal(str)
+    topic_filter = b'{"exchange":"Gdax","instmt":"BTCUSD"'
 
     def __init__(self):
         QtCore.QObject.__init__(self)
@@ -18,22 +19,27 @@ class EVmqListener(QtCore.QObject):
         context = zmq.Context()
         self.socket = context.socket(zmq.SUB)
         self.socket.connect("tcp://" + server + ":%s" % port)
-        topic_filter = b''
-        self.socket.setsockopt(zmq.SUBSCRIBE, topic_filter)
+        self.socket.setsockopt(zmq.SUBSCRIBE, self.topic_filter)
         self.running = True
         print("Started Market EvmqListener running on: " + server + " Port: " + str(port))
+
+    def swap_topic_filter(self, new_topic_filter):
+        self.socket.setsockopt(zmq.UNSUBSCRIBE, self.topic_filter)
+        self.topic_filter = new_topic_filter
+        self.socket.setsockopt(zmq.SUBSCRIBE, self.topic_filter)
 
     def loop(self):
         while self.running:
             string = self.socket.recv_string()
             self.message.emit(string)
-
+            print(string)
 
 class EV(QtWidgets.QMainWindow, interface.Ui_MainWindow):
     last_asks = [0, 0, 0, 0, 0]
     last_bids = [0, 0, 0, 0, 0]
     last_px = 0
     coins_owned = 1.00000000
+
     def __init__(self):
         super(self.__class__, self).__init__()
         self.setupUi(self)
@@ -46,6 +52,17 @@ class EV(QtWidgets.QMainWindow, interface.Ui_MainWindow):
         self.thread.started.connect(self.EVmq_listener.loop)
         self.EVmq_listener.message.connect(self.signal_received)
         QtCore.QTimer.singleShot(0, self.thread.start)
+
+        self.switchMarketPushButton.clicked.connect(self.switchMarket)
+
+    def switchMarket(self):
+        choice = self.marketComboBox.currentText()
+        if choice == "GDAX-BTC/USD":
+            self.EVmq_listener.swap_topic_filter(b'{"exchange":"Gdax","instmt":"BTCUSD"')
+        if choice == "GDAX-ETH/USD":
+            self.EVmq_listener.swap_topic_filter(b'{"exchange":"Gdax","instmt":"ETHUSD"')
+        if choice == "GDAX-LTC/USD":
+            self.EVmq_listener.swap_topic_filter(b'{"exchange":"Gdax","instmt":"LTCUSD"')
 
     def signal_received(self, message):
         #self.debugTextEdit.append("%s\n" % message)
