@@ -32,7 +32,6 @@ class EVmqListener(QtCore.QObject):
         while self.running:
             string = self.socket.recv_string()
             self.message.emit(string)
-            print(string)
 
 class EV(QtWidgets.QMainWindow, interface.Ui_MainWindow):
     last_asks = [0, 0, 0, 0, 0]
@@ -53,7 +52,7 @@ class EV(QtWidgets.QMainWindow, interface.Ui_MainWindow):
         self.EVmq_listener.message.connect(self.signal_received)
         QtCore.QTimer.singleShot(0, self.thread.start)
 
-        self.switchMarketPushButton.clicked.connect(self.switchMarket)
+        self.marketComboBox.currentIndexChanged.connect(self.switchMarket)
 
     def switchMarket(self):
         choice = self.marketComboBox.currentText()
